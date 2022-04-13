@@ -20,6 +20,7 @@ For control of three servo motors mounted on the arm, the [PCA9685 servo driver 
 ## CAD files for 3D printing
 Most parts were 3D printed on an Ender 3 Pro using PLA filament, including the arm links, gripper, drone-to-arm interface, drone legs, and drone guards. CAD files for 3D printing, as well as for viewing the whole assembly, can be found in the folder "CAD Files".
 
+![CAD Assembly](cad_assembly.PNG)
 ## Software Architecture
 ### Drone
 [Ardupilot](https://ardupilot.org/) was chosen to run on the drone flight controller. Due to time constraints, the drone was only able to be controlled manually.
