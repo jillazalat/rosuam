@@ -63,7 +63,9 @@ In another terminal **on the Pi**:
 On the **ground computer**:
 1. Ensure the folder `jimm_arm_control` is in the `catkin_ws/src` directory, and you ran `catkin_make` and `source devel/setup.bash` in the `catkin_ws` directory. 
 2. Ensure [OpenCV is installed](https://pypi.org/project/opencv-python/).
-3. In a terminal, run the following code: `rosrun jimm_arm_control object_tracking.py`. After a few moments the camera feed should open up. When the payload is moved closer to the camera, a green contour is drawn, and the coordinates of the object center as well as its area are printed in red. ![object_tracking](gripscreen1.PNG)
+3. In a terminal, run the following code: `rosrun jimm_arm_control object_tracking.py`. After a few moments the camera feed should open up. When the payload is moved closer to the camera, a green contour is drawn, and the coordinates of the object center as well as its area are printed in red. 
+
+![object_tracking](gripscreen1.PNG)
 
 In another terminal **on the Pi**:
 1. Run the following command: `rosrun jimm_arm_control arm_client.py`. 
