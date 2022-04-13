@@ -26,7 +26,7 @@ Most parts were 3D printed on an Ender 3 Pro using PLA filament, including the a
 [Ardupilot](https://ardupilot.org/) was chosen to run on the drone flight controller. Due to time constraints, the drone was only able to be controlled manually.
 
 ### Arm
-The arm control is run jointly via the ground computer and the robotic arm using a ROS architecture, which can be seen below.
+The arm control is run jointly via the ground computer and the robotic arm using a ROS architecture, which can be seen below. The script `object_tracking.py` publishes arm angles as ROS topics based on what is seen in the video feed. The Raspberry Pi subscribes to these topics and moves the corresponding servo motors in the script `arm_client.py`.
 
 ![ROS Topics](rostopics.PNG)
 
