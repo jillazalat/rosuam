@@ -56,7 +56,7 @@ In one terminal **on the Pi**:
 To ensure the camera is working, run the roslaunch command given in Step 4 on the Pi, then on the ground computer run the following command: `rqt_image_view`. The rqt_image_view should open showing the live camera feed. 
 
 In another terminal **on the Pi**:
-1. Ensure the PCA9685 servo driver module is wired up to the Pi properly, then [enable I2C on the Pi](https://medium.com/vacatronics/getting-started-with-raspberry-pi-i2c-and-ubuntu-server-eaa57ee0baf2).
+1. Ensure the PCA9685 servo driver module is [wired up to the Pi properly](https://learn.adafruit.com/adafruit-16-channel-servo-driver-with-raspberry-pi/hooking-it-up), then [enable I2C on the Pi](https://medium.com/vacatronics/getting-started-with-raspberry-pi-i2c-and-ubuntu-server-eaa57ee0baf2).
 2. [Install Adafruit's PCA9685 servo driver library](https://learn.adafruit.com/adafruit-16-channel-servo-driver-with-raspberry-pi/using-the-adafruit-library). Run the test code given in the link to ensure everything is functional. You should see the servo motors move when running the code.
 3. Ensure the folder `jimm_arm_control` is in the `catkin_ws/src` directory, and you ran `catkin_make` and `source devel/setup.bash` in the `catkin_ws` directory. 
 
