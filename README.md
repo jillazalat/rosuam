@@ -15,6 +15,8 @@ A [Raspberry Pi Zero 2](https://www.raspberrypi.com/products/raspberry-pi-zero-2
 For image recognition, a [Raspberry Pi Camera v1.3](https://projects.raspberrypi.org/en/projects/getting-started-with-picamera) was used.
 
 For control of three servo motors mounted on the arm, the [PCA9685 servo driver board](https://www.amazon.ca/SunFounder-PCA9685-Channel-Arduino-Raspberry/dp/B014KTSMLA/ref=sr_1_6?crid=3QD2Z1HIESGEN&keywords=pca9685&qid=1649836331&sprefix=pca9%2Caps%2C114&sr=8-6) was used.
+
+![Hardware Architecture](hardware.PNG)
 ## CAD files for 3D printing
 Most parts were 3D printed on an Ender 3 Pro using PLA filament, including the arm links, gripper, drone-to-arm interface, drone legs, and drone guards. CAD files for 3D printing, as well as for viewing the whole assembly, can be found in the folder "CAD Files".
 
