@@ -68,7 +68,7 @@ On the **ground computer**:
 ![object_tracking](gripscreen1.PNG)
 
 In another terminal **on the Pi**:
-1. Run the following command: `rosrun arm_client arm_client.py`. 
+1. Run the following command: `rosrun jimm_arm_control arm_client.py`. 
 
 Now the arm servos should move in response to the payload seen in the image feed.
 
