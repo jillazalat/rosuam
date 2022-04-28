@@ -74,6 +74,7 @@ Now the arm servos should move in response to the payload seen in the image feed
 
 ## Gazebo Simulation
 ![gazebopic](gazebo.PNG)
+Credit goes to [Intelligent Quads](https://github.com/Intelligent-Quads/iq_tutorials) for their resources on Gazebo.
 ### Installation instructions
 1. [Install Ardupilot and MAVProxy.](https://github.com/Intelligent-Quads/iq_tutorials/blob/master/docs/Installing_Ardupilot.md) This will also create a SITL simulation using Ardupilot and will act as a ground station which is later utilized to send commands to the drone.
 2. Next, [install Gazebo,](https://github.com/Intelligent-Quads/iq_tutorials/blob/master/docs/installing_gazebo_arduplugin.md) a robotic simulator and Ardupilot Plugin which will be needed to interface models in Gazebo and enable communication with Ardupilot.
