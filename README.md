@@ -72,5 +72,33 @@ In another terminal **on the Pi**:
 
 Now the arm servos should move in response to the payload seen in the image feed.
 
-## Gazebo simulation
+## Gazebo Simulation
+![gazebopic](gazebo.PNG)
+### Installation instructions
+1. [Install Ardupilot and MAVProxy.](https://github.com/Intelligent-Quads/iq_tutorials/blob/master/docs/Installing_Ardupilot.md) This will also create a SITL simulation using Ardupilot and will act as a ground station which is later utilized to send commands to the drone.
+2. Next, [install Gazebo,](https://github.com/Intelligent-Quads/iq_tutorials/blob/master/docs/installing_gazebo_arduplugin.md) a robotic simulator and Ardupilot Plugin which will be needed to interface models in Gazebo and enable communication with Ardupilot.
+3. Next, [install ROS noetic distribution and MAVROS](https://github.com/Intelligent-Quads/iq_tutorials). Subsequently, install the ROS plugins using `sudo apt install ros-noetic-gazebo-ros ros-noetic-gazebo-plugins`.
+
+### To run the simulation
+1. In a terminal, to ensure no Gazebo servers are running in the background use the command `killall gzservers`.
+2. In a new terminal window, to spawn the default drone in the SITL simulation in a custom gym environment run: `roslaunch iq_sim myworld.launch`
+3. Once Gazebo opens up with the quadcopter spawned in the gym environment, click on the drone, open the pose option on the left hand panel and change the z coordinate to 1.1. Click on the drone again to deselect it. 
+4. In a new terminal to start the Arducopter SITL simulation and start the mavproxy ground station by using the following command: `~/startsitl.sh` 
+5. In a new terminal run mavros which is used to allow communication between Ardupilot and ROS. This can be done by running: `roslaunch iq_sim apm.launch`
+6. In a new terminal to get the quadcopter to move in the desire path and achieve specific waypoints (written in the python script `drone_path.py`), run the following command: `rosrun iq_gnc drone_path.py` 
+7. Finally, in the terminal running the ground station, once the following lines are seen in the MAV console window (may take a few minutes):
+
+
+    `“APM: EKF2 IMU0 Origin set to GPS”`
+    
+    `“APM: EKF2 IMU1 Origin set to GPS”`
+    
+    
+Type `stabilize` and subsequently type `mode guided` in the command window. This will arm the drone and enable it to move in the desired path. It will appear in the MAV Console window as in the figure below.
+
+![mavconsole](mavconsole.PNG)
+
+
+
+
 
