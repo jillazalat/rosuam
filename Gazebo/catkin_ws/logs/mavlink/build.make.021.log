@@ -1,0 +1,26 @@
+[  3%] Built target ualberta.xml-v1.0
+[  7%] Built target storm32.xml-v1.0
+[ 11%] Built target uAvionix.xml-v1.0
+[ 15%] Built target icarous.xml-v1.0
+[ 19%] Built target uAvionix.xml-v2.0
+[ 23%] Built target paparazzi.xml-v1.0
+[ 26%] Built target ardupilotmega.xml-v1.0
+[ 30%] Built target all.xml-v1.0
+[ 34%] Built target ASLUAV.xml-v2.0
+[ 38%] Built target all.xml-v2.0
+[ 42%] Built target standard.xml-v1.0
+[ 50%] Built target icarous.xml-v2.0
+[ 50%] Built target storm32.xml-v2.0
+[ 53%] Built target development.xml-v1.0
+[ 57%] Built target ualberta.xml-v2.0
+[ 61%] Built target AVSSUAS.xml-v2.0
+[ 65%] Built target ASLUAV.xml-v1.0
+[ 69%] Built target common.xml-v1.0
+[ 73%] Built target standard.xml-v2.0
+[ 76%] Built target ardupilotmega.xml-v2.0
+[ 80%] Built target AVSSUAS.xml-v1.0
+[ 84%] Built target matrixpilot.xml-v1.0
+[ 88%] Built target matrixpilot.xml-v2.0
+[ 92%] Built target development.xml-v2.0
+[ 96%] Built target paparazzi.xml-v2.0
+[100%] Built target common.xml-v2.0
