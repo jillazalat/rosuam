@@ -60,9 +60,9 @@ class image_converter:
         #rospy.loginfo("Opening gripper")
     
     def closeGripper(self):
-        GRIPPER_CLOSE_ANGLE = 5
+        GRIPPER_CLOSE_ANGLE = 0
         self.gripper_pub.publish(GRIPPER_CLOSE_ANGLE)
-        #rospy.loginfo("Closing gripper")
+        rospy.loginfo("Closing gripper")
     
     def goToHomeConfiguration(self):
         self.CURRENT_APPROACH_ANGLE = 160
@@ -70,7 +70,7 @@ class image_converter:
     
     # Functions to TRY to change servo angles if in acceptable ranges
     def tryMoveApproach(self, change):
-        MIN_APPROACH_ANGLE = 45
+        MIN_APPROACH_ANGLE = 140 - self.CURRENT_ELBOW_ANGLE
         MAX_APPROACH_ANGLE = 160
         newAngle = self.CURRENT_APPROACH_ANGLE + change
         if newAngle < MIN_APPROACH_ANGLE:
@@ -113,8 +113,7 @@ class image_converter:
         GRIPPER_CLOSE_DISTANCE = 15
         TILT_MIN_LIMIT = 75
         TILT_MAX_LIMIT = 180
-        CAMERA_Y_CENTER_MAX = 32 # in the TOP of the video feed (image is inverted)
-        CAMERA_Y_CENTER_MIN = 28 # in the BOTTOM of the video feed
+        CAMERA_Y_CENTER = 20 # in the TOP of the video feed (image is inverted)
         APPROACH_HOME_ANGLE = 90
         TILT_HOME_ANGLE = 25
         APPROACH_FARTHEST_DISTANCE_ANGLE = 90
@@ -130,38 +129,34 @@ class image_converter:
         if len(contours) > 0 and not self.GRIPPER_GRABBED_OBJECT:
             
             c = max(contours, key=cv2.contourArea)
-            ((xc,yc), radius) = cv2.minEnclosingCircle(c) # get radius of largest contour
+            ((xc, yc), radius) = cv2.minEnclosingCircle(c) # get radius of largest contour
             
             if radius > OBJECT_RECOGNITION_RADIUS: # Object recognized
                 
                 # 1. Draw rectangle around object and red dot in center 
-                rectangle = cv2.minAreaRect(c) # Draw rectangle around object
+                rectangle = cv2.minAreaRect(c)
                 x,y,w,h = cv2.boundingRect(c)
-                cv2.rectangle(cv_image, (x, y), (x + w, y + h), (0, 255, 0), 2)
+                cv2.rectangle(cv_image, (x, y), (x + w, y + h), (0, 255, 0), 2) # Draw rectangle around object
                 centerx, centery = x + (w // 2), y + (h // 2)
                 center = (centerx, centery)
                 cv2.circle(cv_image, center, 3, (0, 0, 255), -1) # Draw red dot in the center of the rectangle
 
                 # 2. Check distance to object and display on video feed
-                dist = round((OBJECT_WIDTH*CAMERA_FOCAL_LENGTH / rectangle[1][0]) * 0.8, 1)
+                dist = round((OBJECT_WIDTH * CAMERA_FOCAL_LENGTH / w), 1)
                 object_pose = (x, y, dist)
-                area=round(rectangle[1][0] * rectangle[1][1])
-                text = str(object_pose) + " A = " + str(area)#'Distance from camera in cm:'+
-                cv2.putText(cv_image, text, (10,20), cv2.FONT_HERSHEY_SIMPLEX, .3, (0, 0, 255), 1, cv2.LINE_AA)
+                area = round(rectangle[1][0] * rectangle[1][1])
+                text = str(object_pose) + " A = " + str(area) # Distance from camera in cm 
+                cv2.putText(cv_image, text, (10, 20), cv2.FONT_HERSHEY_SIMPLEX, .3, (0, 0, 255), 1, cv2.LINE_AA)
                 
                 # 3. Center object in camera frame using motion of elbow joint
-                deltaY = y - CAMERA_Y_CENTER_MAX
+                deltaY = y - CAMERA_Y_CENTER
                 if deltaY < 0: # adjust 
                     cv2.putText(cv_image, "Raising", (10, 80), cv2.FONT_HERSHEY_SIMPLEX, .3, (0, 0, 255), 1, cv2.LINE_AA)
-                    #self.tryMoveElbow(int(-deltaY / 10))
                     self.tryMoveElbow(1)
-                    #self.tryMoveElbow(1)
             
                 elif deltaY > 0:
                     cv2.putText(cv_image, "Lowering", (10, 80), cv2.FONT_HERSHEY_SIMPLEX, .3, (0, 0, 255), 1, cv2.LINE_AA)
-                    #self.tryMoveElbow(int(-deltaY / 10))
                     self.tryMoveElbow(-1)
-                    #self.tryMoveElbow(-1)
                     
                 # 4. Based on distance to object, either grab it or come closer to it using motion of base joint
                 
@@ -169,6 +164,7 @@ class image_converter:
                     cv2.putText(cv_image, "Close gripper", (10, 50), cv2.FONT_HERSHEY_SIMPLEX, .3, (0, 0, 255), 1, cv2.LINE_AA)
                     self.closeGripper()
                     self.GRIPPER_GRABBED_OBJECT = True
+                    rospy.sleep(1)
                     self.goToHomeConfiguration()
                     self.tryMoveApproach(0)
                     #for i in range(5):
@@ -177,22 +173,19 @@ class image_converter:
                     cv2.putText(cv_image, "Open gripper", (10, 50), cv2.FONT_HERSHEY_SIMPLEX, .3, (0, 0, 255), 1, cv2.LINE_AA)
                     self.openGripper()
                     self.tryMoveApproach(-2)
-                    #self.tryMoveElbow(2)
             
             elif radius <= OBJECT_RECOGNITION_RADIUS: # other contours detected
                     cv2.putText(cv_image, "Close gripper", (10, 50), cv2.FONT_HERSHEY_SIMPLEX, .3, (0, 0, 255), 1, cv2.LINE_AA)
                     self.closeGripper()
-                    #self.tryMoveApproach(-1)
                     
         elif len(contours) == 0 and not self.GRIPPER_GRABBED_OBJECT: # nothing detected
             cv2.putText(cv_image, "Close gripper", (10, 50), cv2.FONT_HERSHEY_SIMPLEX, .3, (0, 0, 255), 1, cv2.LINE_AA)
             self.closeGripper()
-            #self.tryMoveApproach(-1)
         
         rospy.loginfo("Approach: " + str(self.CURRENT_APPROACH_ANGLE) + "\t\tElbow: " + str(self.CURRENT_ELBOW_ANGLE))
         
         showCameraStream(cv_image)
-        # time.sleep(0.01)
+        #rospy.sleep(0.1)
           
 def main(args):
     rospy.init_node('image_converter', anonymous=True)
