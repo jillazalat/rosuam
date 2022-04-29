@@ -1,0 +1,8 @@
+prefix=/home/moe/catkin_ws/install
+
+Name: iq_gnc
+Description: Description of iq_gnc
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
